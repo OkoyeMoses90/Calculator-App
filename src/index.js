@@ -1,17 +1,41 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import CalculatorButtonsArea from './components/buttonsarea';
+import CalculatorScreen from './components/calculatorscreen';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+
+class CalculatorBody extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            currentValue: "0",
+            equation: "",
+        }
+    }
+
+    changeCurrentValue(newValue) {
+        this.setState({ currentValue: newValue });
+    }
+
+    changeEquation(newValue) {
+        this.setState({ equation: newValue });
+    }
+
+    render() {
+        return (
+            <div className="calcBody">
+                <CalculatorScreen equation={this.state.equation} currentValue={this.state.currentValue} />
+                <CalculatorButtonsArea equation={this.state.equation}
+                    currentValue={this.state.currentValue}
+                    changeEquation={this.changeEquation.bind(this)}
+                    changeCurrentValue={this.changeCurrentValue.bind(this)}
+                />
+            </div>
+        )
+    }
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <CalculatorBody />,
+    document.getElementById('app')
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
